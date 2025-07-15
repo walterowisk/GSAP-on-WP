@@ -1,0 +1,38 @@
+<!-- CÓDIGO GSAP COMENTADO PARA ANIMAÇÃO DE TEXTO AO ROLAR A PÁGINA -->
+
+<!-- Importa a biblioteca principal GSAP -->
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+
+<!-- Importa o plugin ScrollTrigger (animação ao rolar) -->
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+
+<!-- Importa a biblioteca SplitType (divide texto em palavras e caracteres) -->
+<script src="https://unpkg.com/split-type"></script>
+
+<script>
+    // Registra o plugin ScrollTrigger no GSAP
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Seleciona todos os elementos com a classe .textoAnimado
+    const splitTypes = document.querySelectorAll(".textoAnimado");
+
+    // Loop em cada elemento selecionado
+    splitTypes.forEach((char, i) => {
+      // Divide o texto do elemento em palavras e caracteres
+      const text = new SplitType(char, { types: "words, chars" });
+
+      // Cria animação para os caracteres individuais
+      gsap.from(text.chars, {
+        scrollTrigger: {
+          trigger: char,        // Elemento que ativa o ScrollTrigger
+          start: "top 50%",     // Início da animação quando o topo do elemento chega a 50% da viewport
+          end: "top top",       // Fim da animação quando o topo do elemento chega ao topo da viewport
+          scrub: 1,             // Sincroniza a animação com a rolagem
+          markers: true         // Mostra marcadores visuais (útil para testes)
+        },
+        y: -40,                 // Move os caracteres de cima para baixo (de -40px até a posição original)
+        opacity: 0,            // Começa com opacidade 0 (invisível)
+        stagger: 0.1,          // Anima os caracteres em sequência com atraso de 0.1s entre cada um
+      });
+    });
+</script>
